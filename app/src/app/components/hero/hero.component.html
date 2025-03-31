@@ -53,7 +53,7 @@
       
           <div class="flex items-center justify-center gap-4">
             <h4 class="text-white text-lg font-semibold">Have some movies to add?</h4>
-            <button class="bg-red-500 text-white px-4 py-2 rounded-md font-semibold">
+            <button (click)="openModal()" class="bg-red-500 text-white px-4 py-2 rounded-md font-semibold">
               Upload <fa-icon [icon]="faFilm"></fa-icon>
             </button>
           </div>
@@ -75,3 +75,10 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal -->
+<app-upload 
+  *ngIf="isModalOpen" 
+  (closeModalEvent)="closeModal()" 
+  (uploadSuccessEvent)="onUploadSuccess()"
+></app-upload>

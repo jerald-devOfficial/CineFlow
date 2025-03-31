@@ -36,13 +36,20 @@ export class ApiService {
   async postMovie(
     videoFile: File,
     title: string,
-    description: string
+    description: string,
+    thumbnail: string
   ): Promise<any> {
     try {
+      const thumbnailFile = await this.base64ToFile(
+        thumbnail,
+        `${title}_thumbnail.jpg`
+      );
+
       const formData = new FormData();
       formData.append('video_file', videoFile);
       formData.append('title', title);
       formData.append('description', description);
+      formData.append('thumbnail', thumbnailFile);
 
       const response = await this.api.post('movie/', formData, {
         headers: {
@@ -57,17 +64,34 @@ export class ApiService {
     }
   }
 
+  private async base64ToFile(
+    base64String: string,
+    filename: string
+  ): Promise<File> {
+    const response = await fetch(base64String);
+    const blob = await response.blob();
+    return new File([blob], filename, { type: 'image/jpeg' });
+  }
+
   async patchMovie(
     id: string,
     videoFile: File | null | undefined,
     title: string,
-    description: string
+    description: string,
+    thumbnail?: string
   ): Promise<any> {
     try {
       const formData = new FormData();
 
       if (videoFile != null && videoFile != undefined) {
         formData.append('video_file', videoFile);
+        if (thumbnail) {
+          const thumbnailFile = await this.base64ToFile(
+            thumbnail,
+            `${title}_thumbnail.jpg`
+          );
+          formData.append('thumbnail', thumbnailFile);
+        }
       }
 
       if (title) {
@@ -86,7 +110,7 @@ export class ApiService {
 
       return response.data;
     } catch (error) {
-      console.error('Error uploading movie:', error);
+      console.error('Error updating movie:', error);
       throw error;
     }
   }
@@ -95,7 +119,7 @@ export class ApiService {
     try {
       await this.api.delete(`movie/${id}`);
     } catch (error) {
-      console.error('Error uploading movie:', error);
+      console.error('Error deleting movie:', error);
       throw error;
     }
   }

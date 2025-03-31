@@ -4,6 +4,7 @@ export interface MovieDetail {
   description: string;
   created_date: string;
   video_file: string;
+  thumbnail: string;
 }
 
 export interface Movie {

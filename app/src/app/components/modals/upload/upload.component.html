@@ -1,0 +1,85 @@
+<div class="fixed inset-0 bg-black/80 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-gray-900 p-8 rounded-lg w-[500px] relative">
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-xl font-bold text-white">Upload Movie</h3>
+        <button (click)="closeModal()" class="text-gray-400 hover:text-white">
+          <fa-icon [icon]="faTimes"></fa-icon>
+        </button>
+      </div>
+  
+      <!-- Upload Form -->
+      <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+        <!-- Title Input -->
+        <div class="flex flex-col gap-2">
+          <label for="title" class="text-white">Title</label>
+          <input 
+            type="text" 
+            id="title" 
+            formControlName="title"
+            class="bg-gray-800 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            placeholder="Enter movie title"
+          >
+        </div>
+  
+        <!-- Description Input -->
+        <div class="flex flex-col gap-2">
+          <label for="description" class="text-white">Description</label>
+          <textarea 
+            id="description" 
+            formControlName="description"
+            class="bg-gray-800 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 min-h-[100px]"
+            placeholder="Enter movie description"
+          ></textarea>
+        </div>
+  
+        <!-- File Upload with Preview -->
+        <div class="flex flex-col gap-4">
+          <label for="video_file" class="text-white">Video File</label>
+          
+          <!-- Preview Section -->
+          <div class="relative w-[218px] h-[123px] bg-gray-800 rounded-md overflow-hidden">
+            <!-- Loading State -->
+            <div *ngIf="selectedFile && !previewUrl" class="absolute inset-0 flex items-center justify-center">
+              <fa-icon [icon]="faSpinner" class="text-white text-2xl animate-spin"></fa-icon>
+            </div>
+            
+            <!-- Preview Image -->
+            <img 
+              *ngIf="previewUrl"
+              [src]="previewUrl" 
+              [alt]="selectedFile?.name || 'Video thumbnail'" 
+              class="w-full h-full object-cover"
+            >
+            
+            <!-- File Name Overlay -->
+            <div *ngIf="selectedFile" class="absolute bottom-0 left-0 right-0 bg-black/70 py-1 px-2">
+              <p class="text-white text-xs truncate">{{selectedFile.name}}</p>
+            </div>
+          </div>
+  
+          <!-- File Input -->
+          <input 
+            type="file" 
+            id="video_file" 
+            (change)="onFileSelected($event)"
+            accept="video/*"
+            class="text-white"
+          >
+        </div>
+  
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          class="bg-red-500 text-white px-4 py-2 rounded-md font-semibold mt-4 hover:bg-red-600 disabled:opacity-50 flex items-center justify-center gap-2"
+          [disabled]="uploadForm.invalid || !selectedFile || isUploading"
+        >
+          <span *ngIf="!isUploading">Upload Movie</span>
+          <span *ngIf="isUploading" class="flex items-center gap-2">
+            <fa-icon [icon]="faSpinner" class="animate-spin"></fa-icon>
+            Uploading...
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>

@@ -71,13 +71,18 @@
         <!-- Submit Button -->
         <button 
           type="submit" 
-          class="bg-red-500 text-white px-4 py-2 rounded-md font-semibold mt-4 hover:bg-red-600 disabled:opacity-50 flex items-center justify-center gap-2"
-          [disabled]="uploadForm.invalid || !selectedFile || isUploading"
+          [class]="'text-white px-4 py-2 rounded-md font-semibold mt-4 flex items-center justify-center gap-2 transition-colors ' + 
+            (isSuccess ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600')"
+          [disabled]="uploadForm.invalid || !selectedFile || isUploading || isSuccess"
         >
-          <span *ngIf="!isUploading">Upload Movie</span>
+          <span *ngIf="!isUploading && !isSuccess">Upload Movie</span>
           <span *ngIf="isUploading" class="flex items-center gap-2">
             <fa-icon [icon]="faSpinner" class="animate-spin"></fa-icon>
             Uploading...
+          </span>
+          <span *ngIf="isSuccess" class="flex items-center gap-2">
+            <fa-icon [icon]="faCheck"></fa-icon>
+            Upload Successful!
           </span>
         </button>
       </form>

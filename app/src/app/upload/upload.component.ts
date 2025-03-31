@@ -1,26 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCheck, faSpinner, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ApiService } from '../../../services/api.service';
+import { faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { ApiService } from '../services/api.service';
 
 @Component({
-  selector: 'app-upload',
-  imports: [FontAwesomeModule, ReactiveFormsModule, CommonModule],
+  selector: 'app-upload-page',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FontAwesomeModule],
   templateUrl: './upload.component.html',
   styleUrl: './upload.component.css',
 })
-export class UploadComponent {
-  @Output() closeModalEvent = new EventEmitter<void>();
-  @Output() uploadSuccessEvent = new EventEmitter<void>();
-
-  faTimes = faTimes;
+export class UploadPageComponent {
   faSpinner = faSpinner;
   faCheck = faCheck;
   uploadForm: FormGroup;
@@ -30,15 +28,15 @@ export class UploadComponent {
   videoElement: HTMLVideoElement | null = null;
   isSuccess = false;
 
-  constructor(private fb: FormBuilder, private apiService: ApiService) {
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiService,
+    private router: Router
+  ) {
     this.uploadForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
     });
-  }
-
-  closeModal(): void {
-    this.closeModalEvent.emit();
   }
 
   onFileSelected(event: any): void {
@@ -54,32 +52,25 @@ export class UploadComponent {
   }
 
   private createVideoPreview(file: File): void {
-    // Clean up previous video element if it exists
     if (this.videoElement) {
       URL.revokeObjectURL(this.videoElement.src);
     }
 
-    // Create new video element
     this.videoElement = document.createElement('video');
     this.videoElement.preload = 'metadata';
     this.videoElement.playsInline = true;
     this.videoElement.muted = true;
 
-    // Create object URL
     const objectUrl = URL.createObjectURL(file);
     this.videoElement.src = objectUrl;
 
     this.videoElement.onloadeddata = () => {
-      // Try to play for a brief moment to ensure frame is loaded
       this.videoElement
         ?.play()
         .then(() => {
           setTimeout(() => {
             if (this.videoElement) {
-              // Pause the video
               this.videoElement.pause();
-
-              // Create canvas and draw the frame
               const canvas = document.createElement('canvas');
               canvas.width = 218;
               canvas.height = 123;
@@ -96,11 +87,10 @@ export class UploadComponent {
                 this.previewUrl = canvas.toDataURL('image/jpeg', 0.8);
               }
             }
-          }, 1000); // Wait for 1 second to ensure frame is loaded
+          }, 1000);
         })
         .catch((error) => {
           console.error('Error generating preview:', error);
-          // Fallback preview
           this.previewUrl = 'assets/images/assorted/video-placeholder.png';
         });
     };
@@ -121,8 +111,7 @@ export class UploadComponent {
         this.isSuccess = true;
 
         setTimeout(() => {
-          this.uploadSuccessEvent.emit();
-          this.closeModal();
+          this.router.navigate(['/']);
         }, 1500);
       } catch (error) {
         this.isUploading = false;

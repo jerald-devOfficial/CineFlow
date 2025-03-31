@@ -1,0 +1,19 @@
+/* Custom video player controls */
+video::-webkit-media-controls-panel {
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+}
+
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-volume-slider,
+video::-webkit-media-controls-mute-button,
+video::-webkit-media-controls-timeline,
+video::-webkit-media-controls-current-time-display,
+video::-webkit-media-controls-time-remaining-display {
+  color: white;
+}
+
+/* Ensure video takes full height but maintains aspect ratio */
+video {
+  max-height: 100vh;
+  margin: 0 auto;
+}

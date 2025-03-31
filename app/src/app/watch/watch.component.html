@@ -1,0 +1,39 @@
+<div class="fixed inset-0 bg-black">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="flex items-center justify-center h-screen bg-black">
+    <div class="text-white text-2xl">Loading...</div>
+  </div>
+
+  <!-- Video Player -->
+  <div *ngIf="!isLoading && movie" class="relative h-screen">
+    <!-- Back Button -->
+    <button 
+      (click)="goBack()" 
+      class="absolute top-8 left-8 z-10 text-white hover:text-gray-300 transition-colors flex items-center gap-2 text-xl mt-12"
+    >
+      <fa-icon [icon]="faArrowLeft"></fa-icon>
+      Back
+    </button>
+
+    <!-- Video Title -->
+    <div class="absolute top-20 left-1/2 -translate-x-1/2 z-10">
+      <h1 class="text-white text-2xl font-bold">{{ movie.title }}</h1>
+    </div>
+
+    <!-- Video Player -->
+    <video
+      class="w-full h-full object-contain bg-black"
+      [src]="movie.video_file"
+      controls
+      autoplay
+      controlsList="nodownload"
+    >
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!isLoading && !movie" class="flex items-center justify-center h-full">
+    <div class="text-white text-2xl">Movie not found</div>
+  </div>
+</div>

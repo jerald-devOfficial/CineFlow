@@ -5,7 +5,7 @@ import { MovieDetail } from '../../models/movie.model';
 import { ApiService } from '../../services/api.service';
 import { MovieModalComponent } from '../modals/movie/movie.component';
 @Component({
-  selector: 'app-movies',
+  selector: 'app-movies-component',
   standalone: true,
   imports: [CommonModule, MovieModalComponent],
   templateUrl: './movies.component.html',

@@ -30,7 +30,7 @@ export class MovieModalComponent {
   constructor(private router: Router, private apiService: ApiService) {}
 
   onWatch() {
-    this.router.navigate(['/movie', this.movie.id]);
+    this.router.navigate(['/watch', this.movie.id]);
   }
 
   async onEdit() {

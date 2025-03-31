@@ -6,7 +6,7 @@ import { UploadComponent } from '../modals/upload/upload.component';
 import { MoviesComponent } from '../movies/movies.component';
 
 @Component({
-  selector: 'app-hero',
+  selector: 'app-hero-component',
   standalone: true,
   imports: [FontAwesomeModule, CommonModule, UploadComponent],
   templateUrl: './hero.component.html',

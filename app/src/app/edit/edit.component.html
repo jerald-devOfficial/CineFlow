@@ -1,1 +1,127 @@
-<p>edit works!</p>
+<div class="bg-black min-h-screen">
+  <!-- Hero Background -->
+  <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+    <img
+      src="assets/images/bg/hero.png"
+      alt="CineFlow Logo"
+      class="w-full h-1/2 object-cover absolute top-0 left-0 -z-0"
+    />
+    <!-- Gradient overlays -->
+    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/50 to-black opacity-90 z-10"></div>
+    <div class="absolute left-1/2 top-[calc(50%+2rem)] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-transparent to-black opacity-100 h-1/4 w-full z-0" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]"></div>
+  </div>
+
+  <!-- Edit Form Container -->
+  <div class="fixed inset-0 flex items-center justify-center z-20 px-4">
+    <div class="bg-gray-900/95 p-8 rounded-lg w-full max-w-[600px]">
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="flex items-center justify-center py-20">
+        <fa-icon [icon]="faSpinner" class="text-white text-4xl animate-spin"></fa-icon>
+      </div>
+
+      <!-- Edit Form -->
+      <div *ngIf="!isLoading">
+        <div class="flex items-center justify-between mb-8">
+          <h1 class="text-3xl font-bold text-white">Edit Movie</h1>
+          <button 
+            (click)="resetForm()" 
+            class="text-gray-400 hover:text-white flex items-center gap-2 px-4 py-2 rounded-md hover:bg-gray-800 transition-colors"
+            [disabled]="isSaving || isSuccess"
+          >
+            <fa-icon [icon]="faUndo"></fa-icon>
+            Reset Changes
+          </button>
+        </div>
+
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-6">
+          <!-- Title Input -->
+          <div class="flex flex-col gap-2">
+            <label for="title" class="text-white text-lg">Title</label>
+            <input 
+              type="text" 
+              id="title" 
+              formControlName="title"
+              class="bg-gray-800 text-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Enter movie title"
+            >
+          </div>
+
+          <!-- Description Input -->
+          <div class="flex flex-col gap-2">
+            <label for="description" class="text-white text-lg">Description</label>
+            <textarea 
+              id="description" 
+              formControlName="description"
+              class="bg-gray-800 text-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 min-h-[150px]"
+              placeholder="Enter movie description"
+            ></textarea>
+          </div>
+
+          <!-- File Upload with Preview -->
+          <div class="flex flex-col gap-4">
+            <label class="text-white text-lg">Video File</label>
+            
+            <div class="flex items-start gap-4">
+              <!-- Preview Section -->
+              <div class="relative w-[218px] h-[123px] bg-gray-800 rounded-md overflow-hidden">
+                <!-- Loading State -->
+                <div *ngIf="selectedFile && !previewUrl" class="absolute inset-0 flex items-center justify-center">
+                  <fa-icon [icon]="faSpinner" class="text-white text-2xl animate-spin"></fa-icon>
+                </div>
+                
+                <!-- Preview Image -->
+                <img 
+                  [src]="previewUrl" 
+                  [alt]="editForm.get('title')?.value || 'Video thumbnail'" 
+                  class="w-full h-full object-cover"
+                >
+                
+                <!-- File Name Overlay -->
+                <div *ngIf="selectedFile" class="absolute bottom-0 left-0 right-0 bg-black/70 py-1 px-2">
+                  <p class="text-white text-xs truncate">{{selectedFile.name}}</p>
+                </div>
+              </div>
+
+              <!-- Upload New Video Section -->
+              <div class="flex-1">
+                <label 
+                  for="video_file"
+                  class="flex items-center gap-2 px-4 py-3 bg-gray-800 text-white rounded-md cursor-pointer hover:bg-gray-700 transition-colors"
+                >
+                  <fa-icon [icon]="faVideo"></fa-icon>
+                  Choose New Video
+                </label>
+                <input 
+                  type="file" 
+                  id="video_file" 
+                  (change)="onFileSelected($event)"
+                  accept="video/*"
+                  class="hidden"
+                >
+                <p class="text-gray-400 text-sm mt-2">Leave empty to keep the current video</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button 
+            type="submit" 
+            [class]="'text-white px-6 py-3 rounded-md font-semibold mt-4 flex items-center justify-center gap-2 text-lg transition-colors ' + 
+              (isSuccess ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600')"
+            [disabled]="editForm.invalid || isSaving || isSuccess"
+          >
+            <span *ngIf="!isSaving && !isSuccess">Save Changes</span>
+            <span *ngIf="isSaving" class="flex items-center gap-2">
+              <fa-icon [icon]="faSpinner" class="animate-spin"></fa-icon>
+              Saving...
+            </span>
+            <span *ngIf="isSuccess" class="flex items-center gap-2">
+              <fa-icon [icon]="faCheck"></fa-icon>
+              Changes Saved!
+            </span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -33,9 +33,8 @@ export class MovieModalComponent {
     this.router.navigate(['/watch', this.movie.id]);
   }
 
-  async onEdit() {
-    console.log('Edit movie:', this.movie);
-    // Implement edit functionality
+  onEdit() {
+    this.router.navigate(['/edit', this.movie.id]);
   }
 
   async onDelete() {

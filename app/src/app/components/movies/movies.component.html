@@ -1,53 +1,86 @@
-<section class="flex flex-col items-start justify-center z-10 w-full flex-grow px-20 mt-10 gap-y-10">
-    <div class="flex flex-col gap-y-4">
-        <h1 class="text-xl text-white font-bold z-10">Netflix Movies</h1>
-        <div class="flex flex-row gap-x-4 z-10">
-            <div class="flex flex-col gap-y-2">
-                <img src="assets/images/movies/joshua.png" alt="Joshua" class="w-[218px] h-[123px] rounded-md">
-                <h2 class="text-sm text-white font-bold z-10">Joshua</h2>
-            </div>
-            <div class="flex flex-col gap-y-2">
-                <img src="assets/images/movies/one-piece.png" alt="One Piece" class="w-[218px] h-[123px] rounded-md">
-                <h2 class="text-sm text-white font-bold z-10">One Piece</h2>
-            </div>
-            <div class="flex flex-col gap-y-2">
-                <img src="assets/images/movies/suits.png" alt="Suits" class="w-[218px] h-[123px] rounded-md">
-                <h2 class="text-sm text-white font-bold z-10">Suits</h2>
-            </div>
-            <div class="flex flex-col gap-y-2"> 
-                <img src="assets/images/movies/the-legend-of-korra.png" alt="The Legend of Korra" class="w-[218px] h-[123px] rounded-md">
-                <h2 class="text-sm text-white font-bold z-10">The Legend of Korra</h2>
-            </div>
-            <div class="flex flex-col gap-y-2"> 
-                <img src="assets/images/movies/zom-100.png" alt="Zom 100" class="w-[218px] h-[123px] rounded-md">
-                <h2 class="text-sm text-white font-bold z-10">Zom 100</h2>
-            </div>
-        </div>
-    </div>  
+<section
+  class="flex flex-col items-start justify-center z-10 w-full flex-grow px-20 mt-10 gap-y-10"
+>
+  <div class="flex flex-col gap-y-4">
+    <h1 class="text-xl text-white font-bold z-10">Netflix Movies</h1>
+    <div class="flex flex-row gap-x-4 z-10">
+      <div class="flex flex-col gap-y-2">
+        <img
+          src="assets/images/movies/joshua.png"
+          alt="Joshua"
+          class="w-[218px] h-[123px] rounded-md"
+        />
+        <h2 class="text-sm text-white font-bold z-10">Joshua</h2>
+      </div>
+      <div class="flex flex-col gap-y-2">
+        <img
+          src="assets/images/movies/one-piece.png"
+          alt="One Piece"
+          class="w-[218px] h-[123px] rounded-md"
+        />
+        <h2 class="text-sm text-white font-bold z-10">One Piece</h2>
+      </div>
+      <div class="flex flex-col gap-y-2">
+        <img
+          src="assets/images/movies/suits.png"
+          alt="Suits"
+          class="w-[218px] h-[123px] rounded-md"
+        />
+        <h2 class="text-sm text-white font-bold z-10">Suits</h2>
+      </div>
+      <div class="flex flex-col gap-y-2">
+        <img
+          src="assets/images/movies/the-legend-of-korra.png"
+          alt="The Legend of Korra"
+          class="w-[218px] h-[123px] rounded-md"
+        />
+        <h2 class="text-sm text-white font-bold z-10">The Legend of Korra</h2>
+      </div>
+      <div class="flex flex-col gap-y-2">
+        <img
+          src="assets/images/movies/zom-100.png"
+          alt="Zom 100"
+          class="w-[218px] h-[123px] rounded-md"
+        />
+        <h2 class="text-sm text-white font-bold z-10">Zom 100</h2>
+      </div>
+    </div>
+  </div>
 
-    <div class="flex flex-col gap-y-4">
-        <h1 class="text-xl text-white font-bold z-10">Uploaded Movies</h1>
-        
-        <!-- Loading state -->
-        <div *ngIf="isLoading" class="text-white">
-            Loading movies...
-        </div>
+  <div class="flex flex-col gap-y-4">
+    <h1 class="text-xl text-white font-bold z-10">Uploaded Movies</h1>
 
-        <!-- Movies list -->
-        <div *ngIf="!isLoading" class="flex flex-row gap-x-4 z-10 overflow-x-auto">
-            <!-- Debug info -->
-            <div *ngIf="movies.length === 0" class="text-white">
-                No movies found...
-            </div>
+    <!-- Loading state -->
+    <div *ngIf="isLoading" class="text-white">Loading movies...</div>
 
-            <div *ngFor="let movie of movies" class="flex flex-col gap-y-2">
-                <img 
-                    [src]="movie.thumbnail || 'assets/images/assorted/video-placeholder.png'" 
-                    [alt]="movie.title" 
-                    class="w-[218px] h-[123px] rounded-md object-cover"
-                >
-                <h2 class="text-sm text-white font-bold z-10">{{ movie.title }}</h2>
-            </div>
-        </div>
-    </div>  
+    <!-- Movies list -->
+    <div *ngIf="!isLoading" class="flex flex-row gap-x-4 z-10 overflow-x-auto">
+      <!-- Debug info -->
+      <div *ngIf="movies.length === 0" class="text-white">
+        No movies found...
+      </div>
+
+      <div
+        *ngFor="let movie of movies"
+        class="flex flex-col gap-y-2 cursor-pointer"
+        (click)="openModal(movie)"
+      >
+        <img
+          [src]="
+            movie.thumbnail || 'assets/images/assorted/video-placeholder.png'
+          "
+          [alt]="movie.title"
+          class="w-[218px] h-[123px] rounded-md object-cover"
+        />
+        <h2 class="text-sm text-white font-bold z-10">{{ movie.title }}</h2>
+      </div>
+    </div>
+  </div>
+  <!-- Movie Hover Modal -->
+  <app-movie-modal
+    *ngIf="selectedMovie"
+    [movie]="selectedMovie"
+    (closeModal)="closeModal()"
+    (movieDeleted)="loadMovies(false)"
+  ></app-movie-modal>
 </section>

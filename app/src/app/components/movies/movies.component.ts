@@ -3,17 +3,18 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { MovieDetail } from '../../models/movie.model';
 import { ApiService } from '../../services/api.service';
-
+import { MovieModalComponent } from '../modals/movie/movie.component';
 @Component({
   selector: 'app-movies',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MovieModalComponent],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.css',
 })
 export class MoviesComponent implements OnInit, OnDestroy {
   movies: MovieDetail[] = [];
   isLoading = true;
+  selectedMovie: MovieDetail | null = null;
   private refreshSubscription?: Subscription;
   private isInitialLoad = true;
 
@@ -57,5 +58,13 @@ export class MoviesComponent implements OnInit, OnDestroy {
         this.isInitialLoad = false;
       }
     }
+  }
+
+  openModal(movie: MovieDetail) {
+    this.selectedMovie = movie;
+  }
+
+  closeModal() {
+    this.selectedMovie = null;
   }
 }

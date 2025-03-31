@@ -22,11 +22,14 @@
 
     <!-- Video Player -->
     <video
+      #videoPlayer
       class="w-full h-full object-contain bg-black"
       [src]="movie.video_file"
       controls
       autoplay
+      preload="metadata"
       controlsList="nodownload"
+      (loadedmetadata)="onVideoLoaded()"
     >
       Your browser does not support the video tag.
     </video>

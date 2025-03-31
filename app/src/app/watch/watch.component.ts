@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +14,8 @@ import { ApiService } from '../services/api.service';
   styleUrl: './watch.component.css',
 })
 export class WatchPageComponent implements OnInit {
+  @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
+
   movie?: MovieDetail;
   isLoading = true;
   faArrowLeft = faArrowLeft;
@@ -40,5 +42,15 @@ export class WatchPageComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['/']);
+  }
+
+  onVideoLoaded() {
+    // Ensure metadata is loaded and seeking is enabled
+    const video = this.videoPlayer.nativeElement;
+    if (video.duration === Infinity) {
+      // If duration is not available, try to seek to a large time to force metadata load
+      video.currentTime = 1e101;
+      video.currentTime = 0;
+    }
   }
 }

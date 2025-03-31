@@ -1,0 +1,17 @@
+.bg-black {
+    background: linear-gradient(to bottom, #141414 0%, #000000 100%);
+}
+
+/* Optional animation for the 404 number */
+h1 {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(229, 9, 20, 0.8);
+    }
+}

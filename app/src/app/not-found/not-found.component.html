@@ -1,1 +1,28 @@
-<p>not-found works!</p>
+<div class="min-h-screen bg-black flex flex-col items-center justify-center px-4 text-center">
+    <div class="space-y-8">
+        <!-- Error Code -->
+        <h1 class="text-red-600 text-9xl font-bold">404</h1>
+        
+        <!-- Main Message -->
+        <div class="space-y-4">
+            <h2 class="text-white text-4xl font-bold">Lost your way?</h2>
+            <p class="text-gray-400 text-xl max-w-lg mx-auto">
+                Sorry, we can't find that page. You'll find lots to explore on the home page.
+            </p>
+        </div>
+
+        <!-- Home Button -->
+        <button 
+            (click)="goHome()"
+            class="bg-red-600 text-white px-6 py-3 rounded-md font-semibold text-lg hover:bg-red-700 transition-colors duration-300 flex items-center gap-2 mx-auto"
+        >
+            <fa-icon [icon]="faHome"></fa-icon>
+            CineFlow Home
+        </button>
+
+        <!-- Error Code -->
+        <p class="text-gray-500">
+            Error Code: CFES-404
+        </p>
+    </div>
+</div>

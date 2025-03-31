@@ -23,14 +23,27 @@
       <div *ngIf="!isLoading">
         <div class="flex items-center justify-between mb-8">
           <h1 class="text-3xl font-bold text-white">Edit Movie</h1>
-          <button 
-            (click)="resetForm()" 
-            class="text-gray-400 hover:text-white flex items-center gap-2 px-4 py-2 rounded-md hover:bg-gray-800 transition-colors"
-            [disabled]="isSaving || isSuccess"
-          >
-            <fa-icon [icon]="faUndo"></fa-icon>
-            Reset Changes
-          </button>
+          <div class="flex items-center gap-4">
+            <!-- Reset Button -->
+            <button 
+              (click)="resetForm()" 
+              class="text-gray-400 hover:text-white flex items-center gap-2 px-4 py-2 rounded-md hover:bg-gray-800 transition-colors"
+              [disabled]="isSaving || isSuccess"
+            >
+              <fa-icon [icon]="faUndo"></fa-icon>
+              Reset Changes
+            </button>
+            
+            <!-- Delete Button -->
+            <button 
+              (click)="showDeleteConfirm = true"
+              class="text-red-500 hover:text-white flex items-center gap-2 px-4 py-2 rounded-md hover:bg-red-500/20 transition-colors"
+              [disabled]="isSaving || isSuccess"
+            >
+              <fa-icon [icon]="faTrash"></fa-icon>
+              Delete Movie
+            </button>
+          </div>
         </div>
 
         <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-6">
@@ -124,4 +137,12 @@
       </div>
     </div>
   </div>
+
+  <!-- Delete Confirmation Modal -->
+  <app-delete-modal
+    *ngIf="showDeleteConfirm"
+    [title]="editForm.get('title')?.value"
+    (confirmDelete)="onDeleteConfirmed()"
+    (cancelDelete)="showDeleteConfirm = false"
+  ></app-delete-modal>
 </div>

@@ -1,0 +1,58 @@
+<div class="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+  <div class="bg-gray-900 p-8 rounded-lg max-w-md w-full mx-4 relative animate-fadeIn">
+    <!-- Content -->
+    <div class="flex flex-col items-center text-center gap-6">
+      <!-- Warning Icon -->
+      <div class="w-16 h-16 rounded-full bg-red-500/20 flex items-center justify-center">
+        <fa-icon 
+          [icon]="faTrash" 
+          class="text-red-500 text-2xl"
+        ></fa-icon>
+      </div>
+
+      <!-- Message -->
+      <div class="space-y-2">
+        <h3 class="text-xl font-bold text-white">Delete Movie</h3>
+        <p class="text-gray-400">
+          Are you sure you want to delete "{{ title }}"? This action cannot be undone.
+        </p>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex items-center gap-4 w-full">
+        <button
+          (click)="onCancel()"
+          class="flex-1 px-6 py-3 rounded-lg border border-gray-600 text-white hover:bg-gray-800 transition-colors"
+          [disabled]="isDeleting || isDeleteSuccess"
+        >
+          Cancel
+        </button>
+
+        <button
+          (click)="onConfirmDelete()"
+          [class]="'flex-1 px-6 py-3 rounded-lg font-medium flex items-center justify-center gap-2 transition-colors ' + 
+            (isDeleteSuccess ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600')"
+          [disabled]="isDeleting || isDeleteSuccess"
+        >
+          <!-- Normal State -->
+          <span *ngIf="!isDeleting && !isDeleteSuccess" class="flex items-center gap-2">
+            <fa-icon [icon]="faTrash"></fa-icon>
+            Delete
+          </span>
+
+          <!-- Loading State -->
+          <span *ngIf="isDeleting" class="flex items-center gap-2">
+            <fa-icon [icon]="faSpinner" class="animate-spin"></fa-icon>
+            Deleting...
+          </span>
+
+          <!-- Success State -->
+          <span *ngIf="isDeleteSuccess" class="flex items-center gap-2">
+            <fa-icon [icon]="faCheck"></fa-icon>
+            Deleted!
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

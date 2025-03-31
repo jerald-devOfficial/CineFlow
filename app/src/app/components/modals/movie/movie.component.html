@@ -36,7 +36,7 @@
               <fa-icon [icon]="faPencil"></fa-icon>
             </button>
             <button
-              (click)="onDelete()"
+              (click)="showDeleteConfirm = true"
               class="flex items-center gap-2 bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors"
             >
               <fa-icon [icon]="faTrash"></fa-icon>
@@ -53,4 +53,12 @@
       </div>
     </div>
   </div>
+  
+  <!-- Delete Confirmation Modal -->
+  <app-delete-modal
+    *ngIf="showDeleteConfirm"
+    [title]="movie.title"
+    (confirmDelete)="onDeleteConfirmed()"
+    (cancelDelete)="showDeleteConfirm = false"
+  ></app-delete-modal>
   

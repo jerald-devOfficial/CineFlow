@@ -3,17 +3,20 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
+  faCheck,
   faPencil,
   faPlay,
+  faSpinner,
   faTimes,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { MovieDetail } from '../../../models/movie.model';
 import { ApiService } from '../../../services/api.service';
+import { DeleteModalComponent } from '../delete/delete.component';
 
 @Component({
   selector: 'app-movie-modal',
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, DeleteModalComponent],
   templateUrl: './movie.component.html',
   styleUrl: './movie.component.css',
 })
@@ -26,6 +29,11 @@ export class MovieModalComponent {
   faPencil = faPencil;
   faTrash = faTrash;
   faTimes = faTimes;
+  faSpinner = faSpinner;
+  faCheck = faCheck;
+  isDeleting = false;
+  isDeleteSuccess = false;
+  showDeleteConfirm = false;
 
   constructor(private router: Router, private apiService: ApiService) {}
 
@@ -37,19 +45,27 @@ export class MovieModalComponent {
     this.router.navigate(['/edit', this.movie.id]);
   }
 
-  async onDelete() {
-    if (confirm(`Are you sure you want to delete "${this.movie.title}"?`)) {
-      try {
-        await this.apiService.deleteMovie(this.movie.id.toString());
+  async onDeleteConfirmed() {
+    try {
+      await this.apiService.deleteMovie(this.movie.id.toString());
+      setTimeout(() => {
         this.movieDeleted.emit();
         this.onClose();
-      } catch (error) {
-        console.error('Error deleting movie:', error);
-      }
+      }, 1500);
+    } catch (error) {
+      console.error('Error deleting movie:', error);
     }
   }
 
   onClose() {
     this.closeModal.emit();
+  }
+
+  openDeleteConfirm() {
+    this.showDeleteConfirm = true;
+  }
+
+  closeDeleteConfirm() {
+    this.showDeleteConfirm = false;
   }
 }

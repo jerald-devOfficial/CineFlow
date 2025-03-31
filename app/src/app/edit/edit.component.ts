@@ -11,16 +11,23 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faCheck,
   faSpinner,
+  faTrash,
   faUndo,
   faVideo,
 } from '@fortawesome/free-solid-svg-icons';
+import { DeleteModalComponent } from '../components/modals/delete/delete.component';
 import { MovieDetail } from '../models/movie.model';
 import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-edit-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FontAwesomeModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FontAwesomeModule,
+    DeleteModalComponent,
+  ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.css',
 })
@@ -29,6 +36,7 @@ export class EditPageComponent implements OnInit {
   faCheck = faCheck;
   faUndo = faUndo;
   faVideo = faVideo;
+  faTrash = faTrash;
 
   editForm: FormGroup;
   selectedFile: File | null = null;
@@ -39,6 +47,7 @@ export class EditPageComponent implements OnInit {
   isSuccess = false;
   movieId: string = '';
   originalMovie: MovieDetail | null = null;
+  showDeleteConfirm = false;
 
   constructor(
     private fb: FormBuilder,
@@ -164,6 +173,15 @@ export class EditPageComponent implements OnInit {
         this.isSuccess = false;
         console.error('Update error:', error);
       }
+    }
+  }
+
+  async onDeleteConfirmed(): Promise<void> {
+    try {
+      await this.apiService.deleteMovie(this.movieId);
+      this.router.navigate(['/']);
+    } catch (error) {
+      console.error('Error deleting movie:', error);
     }
   }
 

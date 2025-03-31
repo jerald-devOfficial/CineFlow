@@ -110,15 +110,22 @@ The application will be available at `http://localhost:4200`
 
 ## Project Structure
 CineFlow/
-├── app/ # Angular frontend
-│ ├── src/
-│ │ ├── app/
-│ │ ├── assets/
-│ │ └── ...
-│ └── package.json
+├── app/                    # Angular frontend
+│   ├── src/
+│   │   ├── app/           # Angular components, services, etc.
+│   │   ├── assets/        # Images, fonts, and other static files
+│   │   └── ...
+│   └── package.json       # Frontend dependencies
 │
-└── backend/ # Django backend
-├── api/ # Django REST API
-├── backend/ # Django project settings
-├── manage.py
-└── requirements.txt
+└── backend/               # Django backend
+    ├── api/              # Django REST API app
+    │   ├── models.py
+    │   ├── views.py
+    │   ├── urls.py
+    │   └── ...
+    ├── backend/          # Django project settings
+    │   ├── settings.py
+    │   ├── urls.py
+    │   └── ...
+    ├── manage.py         # Django management script
+    └── requirements.txt  # Backend dependencies

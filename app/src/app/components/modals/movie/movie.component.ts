@@ -3,6 +3,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
+  faCalendarCheck,
+  faCalendarPlus,
   faCheck,
   faPencil,
   faPlay,
@@ -31,6 +33,8 @@ export class MovieModalComponent {
   faTimes = faTimes;
   faSpinner = faSpinner;
   faCheck = faCheck;
+  faCalendarPlus = faCalendarPlus;
+  faCalendarCheck = faCalendarCheck;
   isDeleting = false;
   isDeleteSuccess = false;
   showDeleteConfirm = false;

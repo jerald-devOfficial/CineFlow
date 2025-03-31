@@ -1,0 +1,19 @@
+<div class="flex items-center justify-between mb-8">
+  <div>
+    <h1 class="text-3xl font-bold text-white">Edit Movie</h1>
+    <!-- Date Information -->
+    <div class="flex gap-4 mt-2 text-sm text-gray-400">
+      <div class="flex items-center gap-2">
+        <fa-icon [icon]="faCalendarPlus"></fa-icon>
+        <span>Added: {{ originalMovie?.created_at | date:'medium' }}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <fa-icon [icon]="faCalendarCheck"></fa-icon>
+        <span>Last Modified: {{ originalMovie?.updated_at | date:'medium' }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center gap-4">
+    <!-- ... existing buttons ... -->
+  </div>
+</div> 

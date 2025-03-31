@@ -5,6 +5,8 @@ export interface MovieDetail {
   created_date: string;
   video_file: string;
   thumbnail: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface Movie {

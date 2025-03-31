@@ -9,6 +9,8 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
+  faCalendarCheck,
+  faCalendarPlus,
   faCheck,
   faSpinner,
   faTrash,
@@ -37,6 +39,8 @@ export class EditPageComponent implements OnInit {
   faUndo = faUndo;
   faVideo = faVideo;
   faTrash = faTrash;
+  faCalendarPlus = faCalendarPlus;
+  faCalendarCheck = faCalendarCheck;
 
   editForm: FormGroup;
   selectedFile: File | null = null;

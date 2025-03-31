@@ -4,6 +4,13 @@ import { interval, Subscription } from 'rxjs';
 import { MovieDetail } from '../../models/movie.model';
 import { ApiService } from '../../services/api.service';
 import { MovieModalComponent } from '../modals/movie/movie.component';
+
+interface Movie {
+  title: string;
+  image: string;
+  netflixUrl: string;
+}
+
 @Component({
   selector: 'app-movies-component',
   standalone: true,
@@ -13,6 +20,33 @@ import { MovieModalComponent } from '../modals/movie/movie.component';
 })
 export class MoviesComponent implements OnInit, OnDestroy {
   movies: MovieDetail[] = [];
+  netflixMovies: Movie[] = [
+    {
+      title: 'Demon Slayer',
+      image: 'assets/images/movies/demon-slayer.png',
+      netflixUrl: 'https://www.netflix.com/title/81091393',
+    },
+    {
+      title: 'One Piece',
+      image: 'assets/images/movies/one-piece.png',
+      netflixUrl: 'https://www.netflix.com/title/80217863',
+    },
+    {
+      title: 'Suits',
+      image: 'assets/images/movies/suits.png',
+      netflixUrl: 'https://www.netflix.com/title/70195800',
+    },
+    {
+      title: 'The Legend of Korra',
+      image: 'assets/images/movies/the-legend-of-korra.png',
+      netflixUrl: 'https://www.netflix.com/title/80027563',
+    },
+    {
+      title: 'The Garfield Show',
+      image: 'assets/images/movies/the-garfield-show.png',
+      netflixUrl: 'https://www.netflix.com/title/70180088',
+    },
+  ];
   isLoading = true;
   selectedMovie: MovieDetail | null = null;
   private refreshSubscription?: Subscription;

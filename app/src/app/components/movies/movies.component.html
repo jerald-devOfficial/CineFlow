@@ -4,46 +4,20 @@
   <div class="flex flex-col gap-y-4">
     <h1 class="text-xl text-white font-bold z-10">Netflix Movies</h1>
     <div class="flex gap-4 z-10 flex-wrap">
-      <div class="flex flex-col gap-y-2">
+      <a 
+        *ngFor="let movie of netflixMovies" 
+        [href]="movie.netflixUrl" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="flex flex-col gap-y-2 group cursor-pointer transition-transform duration-200 hover:scale-105"
+      >
         <img
-          src="assets/images/movies/joshua.png"
-          alt="Joshua"
-          class="w-[218px] h-[123px] rounded-md"
+          [src]="movie.image"
+          [alt]="movie.title"
+          class="w-[218px] h-[123px] rounded-md group-hover:ring-2 group-hover:ring-red-500"
         />
-        <h2 class="text-sm text-white font-bold z-10">Joshua</h2>
-      </div>
-      <div class="flex flex-col gap-y-2">
-        <img
-          src="assets/images/movies/one-piece.png"
-          alt="One Piece"
-          class="w-[218px] h-[123px] rounded-md"
-        />
-        <h2 class="text-sm text-white font-bold z-10">One Piece</h2>
-      </div>
-      <div class="flex flex-col gap-y-2">
-        <img
-          src="assets/images/movies/suits.png"
-          alt="Suits"
-          class="w-[218px] h-[123px] rounded-md"
-        />
-        <h2 class="text-sm text-white font-bold z-10">Suits</h2>
-      </div>
-      <div class="flex flex-col gap-y-2">
-        <img
-          src="assets/images/movies/the-legend-of-korra.png"
-          alt="The Legend of Korra"
-          class="w-[218px] h-[123px] rounded-md"
-        />
-        <h2 class="text-sm text-white font-bold z-10">The Legend of Korra</h2>
-      </div>
-      <div class="flex flex-col gap-y-2">
-        <img
-          src="assets/images/movies/zom-100.png"
-          alt="Zom 100"
-          class="w-[218px] h-[123px] rounded-md"
-        />
-        <h2 class="text-sm text-white font-bold z-10">Zom 100</h2>
-      </div>
+        <h2 class="text-sm text-white font-bold z-10 group-hover:text-red-500">{{movie.title}}</h2>
+      </a>
     </div>
   </div>
 
@@ -62,7 +36,7 @@
 
       <div
         *ngFor="let movie of movies"
-        class="flex flex-col gap-y-2 cursor-pointer"
+        class="flex flex-col gap-y-2 group cursor-pointer transition-transform duration-200 hover:scale-105"
         (click)="openModal(movie)"
       >
         <img
@@ -70,9 +44,9 @@
             movie.thumbnail || 'assets/images/assorted/video-placeholder.png'
           "
           [alt]="movie.title"
-          class="w-[218px] h-[123px] rounded-md object-cover"
+          class="w-[218px] h-[123px] rounded-md object-cover group-hover:ring-2 group-hover:ring-red-500"
         />
-        <h2 class="text-sm text-white font-bold z-10">{{ movie.title }}</h2>
+        <h2 class="text-sm text-white font-bold z-10 group-hover:text-red-500">{{ movie.title }}</h2>
       </div>
     </div>
   </div>

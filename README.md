@@ -2,7 +2,7 @@
 
 A Netflix-inspired movie streaming platform built with Django REST Framework and Angular. This application allows users to upload, stream, edit, and manage movies with a modern and responsive user interface.
 
-![CineFlow Logo](app/src/assets/images/logo/logo.png)
+![CineFlow Logo](.github/cineflow.png)
 
 ## Features
 
@@ -107,25 +107,3 @@ The application will be available at `http://localhost:4200`
 - `GET /api/movie/<id>/` - Retrieve movie details
 - `PATCH /api/movie/<id>/` - Update movie details
 - `DELETE /api/movie/<id>/` - Delete a movie
-
-## Project Structure
-CineFlow/
-├── app/                    # Angular frontend
-│   ├── src/
-│   │   ├── app/           # Angular components, services, etc.
-│   │   ├── assets/        # Images, fonts, and other static files
-│   │   └── ...
-│   └── package.json       # Frontend dependencies
-│
-└── backend/               # Django backend
-    ├── api/              # Django REST API app
-    │   ├── models.py
-    │   ├── views.py
-    │   ├── urls.py
-    │   └── ...
-    ├── backend/          # Django project settings
-    │   ├── settings.py
-    │   ├── urls.py
-    │   └── ...
-    ├── manage.py         # Django management script
-    └── requirements.txt  # Backend dependencies

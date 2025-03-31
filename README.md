@@ -60,6 +60,12 @@ source venv/bin/activate  # On Windows use: venv/Scripts/activate
 # Install dependencies (after activating virtual environment)
 pip install -r requirements.txt
 
+# Exceptions, you may skip and run:
+pip install -r requirements.txt
+# and if it works on your end, it may will be fine. If you encounter an error, you can try this:
+pip install -r requirements.txt --user
+# Else, if skipping will not work, then follow the recommended steps
+
 # Run migrations
 python manage.py migrate
 

@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faFilm } from '@fortawesome/free-solid-svg-icons';
+import { HeroComponent } from '../components/hero/hero.component';
+import { MoviesComponent } from '../components/movies/movies.component';
 
 @Component({
   selector: 'app-home',
-  imports: [FontAwesomeModule],
+  imports: [HeroComponent, MoviesComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
-  faFilm = faFilm;
-}
+export class HomeComponent {}

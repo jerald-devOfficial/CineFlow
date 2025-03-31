@@ -1,0 +1,25 @@
+# Django and Django REST Framework
+Django==5.1.7
+djangorestframework==3.14.0
+
+# CORS handling
+django-cors-headers==4.3.1
+
+# Image Processing (for thumbnail generation)
+Pillow==10.2.0
+
+# Development Tools
+django-debug-toolbar==4.3.0
+
+# API Documentation (optional but recommended)
+drf-yasg==1.21.7
+
+# Python Utilities
+python-magic==0.4.27
+python-magic-bin==0.4.14; platform_system == 'Windows'
+
+# Environment Variables (optional)
+python-dotenv==1.0.1
+
+# Production Server (optional)
+gunicorn==21.2.0 

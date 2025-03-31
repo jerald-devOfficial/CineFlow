@@ -35,37 +35,48 @@
   
         <!-- File Upload with Preview -->
         <div class="flex flex-col gap-4">
-          <label for="video_file" class="text-white">Video File</label>
+          <label class="text-white text-lg">Video File</label>
           
-          <!-- Preview Section -->
-          <div class="relative w-[218px] h-[123px] bg-gray-800 rounded-md overflow-hidden">
-            <!-- Loading State -->
-            <div *ngIf="selectedFile && !previewUrl" class="absolute inset-0 flex items-center justify-center">
-              <fa-icon [icon]="faSpinner" class="text-white text-2xl animate-spin"></fa-icon>
+          <div class="flex items-start gap-4">
+            <!-- Preview Section -->
+            <div class="relative w-[218px] h-[123px] bg-gray-800 rounded-md overflow-hidden">
+              <!-- Loading State -->
+              <div *ngIf="selectedFile && !previewUrl" class="absolute inset-0 flex items-center justify-center">
+                <fa-icon [icon]="faSpinner" class="text-white text-2xl animate-spin"></fa-icon>
+              </div>
+              
+              <!-- Preview Image -->
+              <img 
+                *ngIf="previewUrl"
+                [src]="previewUrl" 
+                [alt]="selectedFile?.name || 'Video thumbnail'" 
+                class="w-full h-full object-cover object-center"
+              >
+              
+              <!-- File Name Overlay -->
+              <div *ngIf="selectedFile" class="absolute bottom-0 left-0 right-0 bg-black/70 py-1 px-2">
+                <p class="text-white text-xs truncate">{{selectedFile.name}}</p>
+              </div>
             </div>
-            
-            <!-- Preview Image -->
-            <img 
-              *ngIf="previewUrl"
-              [src]="previewUrl" 
-              [alt]="selectedFile?.name || 'Video thumbnail'" 
-              class="w-full h-full object-cover"
-            >
-            
-            <!-- File Name Overlay -->
-            <div *ngIf="selectedFile" class="absolute bottom-0 left-0 right-0 bg-black/70 py-1 px-2">
-              <p class="text-white text-xs truncate">{{selectedFile.name}}</p>
+  
+            <!-- Upload New Video Section -->
+            <div class="flex-1">
+              <label 
+                for="video_file"
+                class="flex items-center gap-2 px-4 py-3 bg-gray-800 text-white rounded-md cursor-pointer hover:bg-gray-700 transition-colors"
+              >
+                <fa-icon [icon]="faVideo"></fa-icon>
+                Choose Video
+              </label>
+              <input 
+                type="file" 
+                id="video_file" 
+                (change)="onFileSelected($event)"
+                accept="video/*"
+                class="hidden"
+              >
             </div>
           </div>
-  
-          <!-- File Input -->
-          <input 
-            type="file" 
-            id="video_file" 
-            (change)="onFileSelected($event)"
-            accept="video/*"
-            class="text-white"
-          >
         </div>
   
         <!-- Submit Button -->

@@ -8,7 +8,12 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCheck,
+  faSpinner,
+  faTimes,
+  faVideo,
+} from '@fortawesome/free-solid-svg-icons';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -21,6 +26,8 @@ import { ApiService } from '../services/api.service';
 export class UploadPageComponent {
   faSpinner = faSpinner;
   faCheck = faCheck;
+  faVideo = faVideo;
+  faTimes = faTimes;
   uploadForm: FormGroup;
   selectedFile: File | null = null;
   isUploading = false;
@@ -72,8 +79,8 @@ export class UploadPageComponent {
             if (this.videoElement) {
               this.videoElement.pause();
               const canvas = document.createElement('canvas');
-              canvas.width = 218;
-              canvas.height = 123;
+              canvas.width = 1280; // 720p width
+              canvas.height = 720; // 720p height
 
               const ctx = canvas.getContext('2d');
               if (ctx && this.videoElement) {
@@ -84,7 +91,7 @@ export class UploadPageComponent {
                   canvas.width,
                   canvas.height
                 );
-                this.previewUrl = canvas.toDataURL('image/jpeg', 0.8);
+                this.previewUrl = canvas.toDataURL('image/jpeg', 0.9); // Slightly lower quality
               }
             }
           }, 1000);
@@ -119,6 +126,10 @@ export class UploadPageComponent {
         console.error('Upload error:', error);
       }
     }
+  }
+
+  goBack() {
+    this.router.navigate(['/']);
   }
 
   ngOnDestroy() {

@@ -9,6 +9,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
+  faArrowLeft,
   faCalendarCheck,
   faCalendarPlus,
   faCheck,
@@ -41,6 +42,7 @@ export class EditPageComponent implements OnInit {
   faTrash = faTrash;
   faCalendarPlus = faCalendarPlus;
   faCalendarCheck = faCalendarCheck;
+  faArrowLeft = faArrowLeft;
 
   editForm: FormGroup;
   selectedFile: File | null = null;
@@ -113,20 +115,53 @@ export class EditPageComponent implements OnInit {
           setTimeout(() => {
             if (this.videoElement) {
               this.videoElement.pause();
+
               const canvas = document.createElement('canvas');
-              canvas.width = 218;
-              canvas.height = 123;
+              canvas.width = 1280; // 720p width for good balance of quality and size
+              canvas.height = 720; // 720p height
 
               const ctx = canvas.getContext('2d');
               if (ctx && this.videoElement) {
+                // Enable high-quality image rendering
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+
+                // Get video dimensions
+                const { videoWidth, videoHeight } = this.videoElement;
+                const videoAspect = videoWidth / videoHeight;
+                const canvasAspect = canvas.width / canvas.height;
+
+                // Calculate dimensions to maintain aspect ratio
+                let renderWidth = canvas.width;
+                let renderHeight = canvas.height;
+                let offsetX = 0;
+                let offsetY = 0;
+
+                if (videoAspect > canvasAspect) {
+                  // Video is wider than canvas
+                  renderHeight = canvas.width / videoAspect;
+                  offsetY = (canvas.height - renderHeight) / 2;
+                } else {
+                  // Video is taller than canvas
+                  renderWidth = canvas.height * videoAspect;
+                  offsetX = (canvas.width - renderWidth) / 2;
+                }
+
+                // Add black background
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Draw the video frame
                 ctx.drawImage(
                   this.videoElement,
-                  0,
-                  0,
-                  canvas.width,
-                  canvas.height
+                  offsetX,
+                  offsetY,
+                  renderWidth,
+                  renderHeight
                 );
-                this.previewUrl = canvas.toDataURL('image/jpeg', 0.8);
+
+                // Convert to high-quality JPEG
+                this.previewUrl = canvas.toDataURL('image/jpeg', 0.92);
               }
             }
           }, 1000);
@@ -187,6 +222,10 @@ export class EditPageComponent implements OnInit {
     } catch (error) {
       console.error('Error deleting movie:', error);
     }
+  }
+
+  goBack(): void {
+    this.router.navigate(['/']);
   }
 
   ngOnDestroy() {
